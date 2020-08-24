@@ -10,25 +10,42 @@ const Employee = conn.define('employee', {
     validate: {
       notEmpty: true,
     },
-    unique: true,
+    //unique: true,
   },
 });
+
+const Department = conn.define('department', {
+  name: {
+    type: STRING,
+  },
+});
+
+const departments = [
+  { name: 'Employee with no Department' },
+  { name: 'Electronics' },
+  { name: 'Food Court' },
+  { name: 'Sports' },
+  { name: 'Apparel' },
+  { name: 'Tools' },
+];
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
   const workForce = [];
   while (workForce.length < 50) {
     workForce.push(
-      Employee.create({
+      await Employee.create({
         name: faker.name.firstName(),
       })
     );
   }
+  await Department.bulkCreate(departments);
 };
 
 module.exports = {
-  model: {
+  models: {
     Employee,
+    Department,
   },
   syncAndSeed,
 };
