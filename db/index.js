@@ -29,6 +29,9 @@ const departments = [
   { name: 'Tools' },
 ];
 
+Department.hasMany(Employee);
+Employee.belongsTo(Department);
+
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
   const workForce = [];
@@ -39,7 +42,18 @@ const syncAndSeed = async () => {
       })
     );
   }
-  await Department.bulkCreate(departments);
+  //await Department.bulkCreate(departments);
+  const [noDepartment, Electronics, FoodCourt, Sports, Apparel, Tools] = await Promise.all([
+    Department.create({ name: 'Employee with no Department' }),
+    Department.create({ name: 'Electronics'}),
+    Department.create({ name: 'Food Court' }),
+    Department.create({ name: 'Sports' }),
+    Department.create({ name: 'Apparel' }),
+    Department.create({ name: 'Tools' })
+  ])
+
+
+
 };
 
 module.exports = {
