@@ -4,9 +4,11 @@ const db = require('./db');
 const faker = require('faker');
 const morgan = require('morgan');
 const path = require('path');
+//const bodyParser = require('body-parser')
 const { Employee, Department } = db.models;
 
 app.use(require('body-parser').json());
+//app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
 
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
@@ -50,6 +52,10 @@ app.put('api/employees/:id', async (req, res, next) => {
     next(err);
   }
 });
+
+app.use((err, req, res, next)=> {
+    res.status(500).send({ error: err.message });
+  });
 
 const port = process.env.PORT || 5000;
 
