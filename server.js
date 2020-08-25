@@ -11,10 +11,10 @@ app.use(require('body-parser').json());
 //app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
 
-app.use('/dist', express.static(path.join(__dirname, 'dist')));
+app.use('/dist', express.static(path.join(__dirname, 'dist')));  //enables react code on client
 
 app.get('/', (req, res, next) =>
-  res.sendFile(path.join(__dirname, 'index.html'))
+  res.sendFile(path.join(__dirname, 'index.html')) //renders this html file
 );
 
 app.get('/api/employees', async (req, res, next) => {
