@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const { STRING } = Sequelize;
-const conn = new Sequelize('postgres://localhost/ACME_db');
+const conn = new Sequelize(process.env.DATABASE_URL || 'postgres://localhost/ACME_db');
 const faker = require('faker');
 
 const Employee = conn.define('employee', {
